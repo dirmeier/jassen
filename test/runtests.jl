@@ -1,6 +1,6 @@
-using jassen
+using Jassen
 using Test
 
-@testset "jassen.jl" begin
+@testset "Jassen.jl" begin
     # Write your tests here.
 end

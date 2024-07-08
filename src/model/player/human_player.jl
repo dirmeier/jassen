@@ -1,0 +1,2 @@
+
+mutable struct HumanPlayer end

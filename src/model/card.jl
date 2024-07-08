@@ -14,10 +14,12 @@ mutable struct Card
     end
 end
 
+function Base.show(io::IO, card::Card)
+    print(io, repres[card.suit, card.symbol])
+end
 
-hashmap = Dict("language"=>"julia","version"=>"0.6")
 
-repr = Dict(
+repres = Dict(
     (eichel, ass) => "🌰A",
     (eichel, könig)=> "🌰K",
     (eichel, ober)=> "🌰O",

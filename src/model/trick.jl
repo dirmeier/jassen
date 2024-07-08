@@ -1,4 +1,4 @@
-include("player.jl")
+include("player/player.jl")
 include("card.jl")
 
 
@@ -83,4 +83,12 @@ end
 
 function has_same_suit_as_first_card(trick::Trick, card::Card)
   return string(card.suit) == string(trick.played_cards[1][2].suit)
+end
+
+function has_trump(trick::Trick, player::Player)
+  for card in player.cards
+      if is_trump(trick, card)
+          return true
+      end
+  end
 end

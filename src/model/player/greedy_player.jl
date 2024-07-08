@@ -1,4 +1,4 @@
-import StatsBase: countmap                                                                                                                                             
+import StatsBase: countmap                                                                                                                                          
 
 include("../trick.jl")
 include("../card.jl")
@@ -6,6 +6,14 @@ include("player.jl")
 
 
 mutable struct GreedyPlayer <: Player
+    player_idx::Integer
+    team::Integer
+    cards::Vector{Card}
+    is_playing_team::Bool
+
+    function GreedyPlayer(player_idx::Integer, team::Integer)
+        new(player_idx, team, [], false)
+    end
 end
 
 function play_card(player::GreedyPlayer, trick::Trick) 

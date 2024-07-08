@@ -1,4 +1,4 @@
-include("player.jl")
+include("player/player.jl")
 include("trick.jl")
 
 mutable struct Round

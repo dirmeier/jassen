@@ -4,12 +4,28 @@ on:
   push:
     branches:
       - main
+    pull_request:
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 
 jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: 1
+      - run: |
+          julia  -e 'using Pkg; Pkg.add("JuliaFormatter")'
+          julia  -e 'using JuliaFormatter; format("."; verbose=true)'
+      - uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: JuliaFormatter
+          fail_on_error: true
   test:
     name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
     runs-on: ${{ matrix.os }}
@@ -36,3 +52,4 @@ jobs:
       - uses: julia-actions/cache@v2
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
+

@@ -1,4 +1,4 @@
-using jassen
+using Jassen
 using Test
 
 @testset "jassen.jl" begin

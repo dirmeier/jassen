@@ -8,21 +8,21 @@ include("round.jl")
 
 N_CARDS = 36
 N_PLAYERS = 4
-N_ROUNDS= 12
-N_TRICKS_PER_ROUND  = 9
+N_ROUNDS = 12
+N_TRICKS_PER_ROUND = 9
 
 mutable struct Game
     players::Vector{Player}
-    cards::Vector{Card} 
+    cards::Vector{Card}
     rounds::Vector{Round}
     rng::Any
 
     function Game(players::Vector{T}, seed::Integer) where {T<:Player}
-        new(
-            players, 
+        return new(
+            players,
             [Card(su, sy) for su in instances(Suit) for sy in instances(Symbol)],
-            [], 
-            StableRNG(seed)
+            [],
+            StableRNG(seed),
         )
     end
 end
@@ -36,19 +36,19 @@ function play_round(game::Game)
         trick, state = play_trick(game, i, current_game_variant, state)
         add_trick(round, trick)
     end
-    push!(game.rounds, round)
+    return push!(game.rounds, round)
 end
 
 function deal(game::Game)
     println("dealing cards")
     idxs = shuffle(game.rng, [1:N_CARDS;])
-    cards = [deepcopy(game.cards[idx])  for idx in idxs]
-    state =  zeros(Integer, (N_CARDS, N_PLAYERS + 1))
+    cards = [deepcopy(game.cards[idx]) for idx in idxs]
+    state = zeros(Integer, (N_CARDS, N_PLAYERS + 1))
     while !isempty(cards)
         for player in game.players
             if !isempty(cards)
                 card = pop!(cards)
-                take_card(player, card)                
+                take_card(player, card)
                 state[card.encoding, player.player_idx] = 1
             end
         end
@@ -67,18 +67,20 @@ function decide_game_variant(game::Game)
     return current_game_variant
 end
 
-function play_trick(game::Game, trick_idx::Integer, current_game_variant::String, state::Matrix{Integer})
+function play_trick(
+    game::Game, trick_idx::Integer, current_game_variant::String, state::Matrix{Integer}
+)
     trick = Trick(trick_idx, game.players[1], current_game_variant)
     println("player $(game.players[1].player_idx) is opening the trick")
     for player in game.players
-       if typeof(player) == HumanPlayer
-        print("human player $(player.plyer_idx)'s turn")
-        print_trick_until_now(trick)
-       end 
-       card = play_card(player, trick, state)
-       state = add_card_and_update(trick, player, card, state)
+        if typeof(player) == HumanPlayer
+            print("human player $(player.plyer_idx)'s turn")
+            print_trick_until_now(trick)
+        end
+        card = play_card(player, trick, state)
+        state = add_card_and_update(trick, player, card, state)
     end
-    trick = decide_winner_and_count_trick(game, trick)    
+    trick = decide_winner_and_count_trick(game, trick)
     return trick, state
 end
 
@@ -96,14 +98,13 @@ function decide_winner_and_count_trick(game::Game, trick::Trick)
     return trick
 end
 
-
 function move_to_next_player(game::Game)
     if isempty(game.rounds)
-        return
+        return nothing
     end
 
     new_starting_player_idx = (game.rounds[end].starting_player.player_idx + 1) % 4 + 1
-    
+
     idx = [id for id in [1:4;] if game.players[id].player_idx == new_starting_player_idx][1]
     game.players = append!(game.players[idx:end], game.players[1:(idx - 1)])
 

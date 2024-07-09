@@ -1,4 +1,2 @@
 
-
-mutable struct HumanPlayer
-end
+mutable struct HumanPlayer end

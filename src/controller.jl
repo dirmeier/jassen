@@ -1,9 +1,8 @@
 include("model/game.jl")
 
 mutable struct Controller
-    game::Game    
+    game::Game
 end
-
 
 function play_round(controller::Controller)
     for _ in range(1, 1)

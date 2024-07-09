@@ -1,6 +1,7 @@
 #!/usr/bin/julia
 
-import Jassen: GreedyPlayer, Game
+include("src/model/player/greedy_player.jl")
+include("src/model/game.jl")
 
 (
     function ()

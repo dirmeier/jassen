@@ -1,8 +1,4 @@
 module Jassen
-    
-    using Random
-    using StatsBase
-    using StableRNGs
 
     import Random: shuffle
     import StatsBase: countmap

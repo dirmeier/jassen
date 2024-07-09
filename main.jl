@@ -1,6 +1,8 @@
-#include("src/controller.jl")
-#include("src/model/game.jl")
+#!/usr/bin/julia
+
 include("src/model/player/greedy_player.jl")
+include("src/model/game.jl")
+include("src/controller.jl")
 
 (function () 
     players = [
@@ -10,8 +12,8 @@ include("src/model/player/greedy_player.jl")
         GreedyPlayer(4, 2)
 
     ]
-    #game = Game(players, 12345)
-    #controller = Controller(game)
-    #play_round(controller)
+    game = Game(players, 12345)
+    controller = Controller(game)
+    play_round(controller)
     println("done")
 end)()

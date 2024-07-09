@@ -10,12 +10,19 @@ mutable struct Card
     value::Int8
    
     function Card(suit::Suit, symbol::Symbol)
-        new(suit, symbol, 1, 2)
+        new(suit, symbol, encodings[(suit, symbol)], values[(suit, symbol)])
     end
 end
 
 function Base.show(io::IO, card::Card)
     print(io, repres[card.suit, card.symbol])
+end
+
+function Base.isless(lhs::Card, rhs::Card)
+    if Integer(lhs.suit) == Integer(rhs.suit)
+        return Integer(lhs.symbol) <= Integer(rhs.symbol)
+    end
+    return Integer(lhs.suit) < Integer(rhs.suit)
 end
 
 
@@ -62,45 +69,45 @@ repres = Dict(
 )
 
 encodings = Dict(
-    (eichel, ass) => 0,
-    (eichel, könig) => 1,
-    (eichel, ober) => 2,
-    (eichel, under) => 3,
-    (eichel, zehn) => 4,
-    (eichel, neun) => 5,
-    (eichel, acht) => 6,
-    (eichel, sieben) => 7,
-    (eichel, sechs) => 8,
+    (eichel, ass) => 1,
+    (eichel, könig) => 2,
+    (eichel, ober) => 3,
+    (eichel, under) => 4,
+    (eichel, zehn) => 5,
+    (eichel, neun) => 6,
+    (eichel, acht) => 7,
+    (eichel, sieben) => 8,
+    (eichel, sechs) => 9,
 
-    (schilten, ass) => 9,
-    (schilten, könig) => 10,
-    (schilten, ober) => 11,
-    (schilten, under) => 12,
-    (schilten, zehn) => 13,
-    (schilten, neun) => 14,
-    (schilten, acht) => 15,
-    (schilten, sieben) => 16,
-    (schilten, sechs) => 17,
+    (schilten, ass) => 10,
+    (schilten, könig) => 11,
+    (schilten, ober) => 12,
+    (schilten, under) => 13,
+    (schilten, zehn) => 14,
+    (schilten, neun) => 15,
+    (schilten, acht) => 16,
+    (schilten, sieben) => 17,
+    (schilten, sechs) => 18,
 
-    (rosen, ass) => 18,
-    (rosen, könig) => 19,
-    (rosen, ober) => 20,
-    (rosen, under) => 21,
-    (rosen, zehn) => 22,
-    (rosen, neun) => 23,
-    (rosen, acht) => 24,
-    (rosen, sieben) => 25,
-    (rosen, sechs) => 26,
+    (rosen, ass) => 19,
+    (rosen, könig) => 20,
+    (rosen, ober) => 21,
+    (rosen, under) => 22,
+    (rosen, zehn) => 23,
+    (rosen, neun) => 24,
+    (rosen, acht) => 25,
+    (rosen, sieben) => 26,
+    (rosen, sechs) => 27,
 
-    (schellen, ass) => 27,
-    (schellen, könig) => 28,
-    (schellen, ober) => 29,
-    (schellen, under) => 30,
-    (schellen, zehn) => 31,
-    (schellen, neun) => 32,
-    (schellen, acht) => 33,
-    (schellen, sieben) => 34,
-    (schellen, sechs) => 35,
+    (schellen, ass) => 28,
+    (schellen, könig) => 29,
+    (schellen, ober) => 30,
+    (schellen, under) => 31,
+    (schellen, zehn) => 32,
+    (schellen, neun) => 33,
+    (schellen, acht) => 34,
+    (schellen, sieben) => 35,
+    (schellen, sechs) => 36,
 )
 
 values = Dict(

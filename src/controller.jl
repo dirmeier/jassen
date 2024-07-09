@@ -6,9 +6,9 @@ end
 
 
 function play_round(controller::Controller)
-    for _ in range(1)
+    for _ in range(1, 1)
         print("")
-        play_round(game)
+        play_round(controller.game)
         print("")
     end
 end

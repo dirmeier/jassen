@@ -10,6 +10,6 @@ mutable struct Round
     end    
 end
 
-function add_trick(round::Rouhd, trick::Trick)
+function add_trick(round::Round, trick::Trick)
     push!(round.tricks, trick)
 end

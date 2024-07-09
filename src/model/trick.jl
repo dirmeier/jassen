@@ -7,8 +7,12 @@ mutable struct Trick
     starting_player::Player
     game_variant::String
     played_cards::Vector{Tuple{Player, Card}}
-    winner::Player
-    winning_idx::Int8
+    winner::Union{Missing,Player}
+    winning_idx::Integer
+
+    function Trick(idx::Integer, player::T, game_variant::String) where {T<:Union{Missing,Player}}
+      new(idx, player, game_variant, [], missing, -1)
+    end
 end
 
 
@@ -31,7 +35,7 @@ function declare_winner(trick::Trick, winning_idx::Int, player::Player)
   trick.winning_idx = winning_idx
 end
 
-function add_card_and_update(trick::Trick, player::Player, card::Card, state::Vector{Vector{Integer}}) 
+function add_card_and_update(trick::Trick, player::Player, card::Card, state::Matrix{Integer}) 
   push!(trick.played_cards, (player, card))
   state[card.encoding, end] = 1
   state[card.encoding, player.player_idx] = 0
@@ -40,7 +44,7 @@ end
 
 
 function can_take_trick(trick::Trick, new_card::Card)
-  best_card = trick.played_cards[1]
+  best_card = trick.played_cards[1][2]
 
   for (_, played_card) in trick.played_cards[2:end] 
     if new_card_trumps_another_card(trick, best_card, played_card)

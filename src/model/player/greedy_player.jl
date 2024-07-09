@@ -6,7 +6,7 @@ include("player.jl")
 
 
 mutable struct GreedyPlayer <: Player
-    player_idx::Integer
+    player_idx::Int
     team::Integer
     cards::Vector{Card}
     is_playing_team::Bool
@@ -16,7 +16,7 @@ mutable struct GreedyPlayer <: Player
     end
 end
 
-function play_card(player::GreedyPlayer, trick::Trick) 
+function play_card(player::GreedyPlayer, trick::Trick, state::Matrix{Integer}) 
     player_has_trump = _has_trump(player, trick)
     if is_first_card(trick)
         if player_has_trump
@@ -43,7 +43,7 @@ function play_card(player::GreedyPlayer, trick::Trick)
         end
     end
 
-    if !first_card_is_trump
+    if !first_card_trump
         for player_card in player.cards
             if can_take_trick(trick, player_card)
                 _remove_card(player, player_card)
@@ -94,5 +94,5 @@ function decide_game_variant(player::GreedyPlayer)
     counts = countmap([card.suit for card in player.cards])
     sorted_counts = sort(collect(counts), by=x->x[2])
     # return the suit as string with the highest number of counts
-    return string(sorted_counts[end][2])
+    return string(sorted_counts[end][1])
 end

@@ -1,7 +1,11 @@
 name: formatter
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+    pull_request:
+      - main
   
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

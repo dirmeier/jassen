@@ -40,6 +40,12 @@ function play_card(player::GreedyPlayer, trick::Trick, state::Matrix{Integer})
                 return player_card
             end
         end
+        for player_card in player.cards
+            if is_trump(trick, player_card)
+                _remove_card(player, player_card)
+                return player_card
+            end
+        end
     end
 
     if !first_card_trump

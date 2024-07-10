@@ -74,7 +74,7 @@ function play_trick(
     println("player $(game.players[1].player_idx) is opening the trick")
     for player in game.players
         if typeof(player) == HumanPlayer
-            print("human player $(player.plyer_idx)'s turn")
+            println("human player $(player.player_idx)'s turn")
             print_trick_until_now(trick)
         end
         card = play_card(player, trick, state)
@@ -87,7 +87,7 @@ end
 function decide_winner_and_count_trick(game::Game, trick::Trick)
     best_idx, (best_player, best_card) = 1, trick.played_cards[1]
     for (idx, (player_idx, card)) in enumerate(trick.played_cards[2:end])
-        if new_card_trumps_another_card(trick, card, best_card)
+        if new_card_trumps_another_card(trick, best_card, card)
             best_idx, best_player, best_card = idx + 1, player_idx, card
         end
     end

@@ -10,7 +10,7 @@ mutable struct Card
     value::Int8
 
     function Card(suit::Suit, symbol::Symbol)
-        return new(suit, symbol, encodings[(suit, symbol)], values[(suit, symbol)])
+        return new(suit, symbol, encodings[(suit, symbol)], vals[(suit, symbol)])
     end
 end
 
@@ -103,7 +103,7 @@ encodings = Dict(
     (schellen, sechs) => 36,
 )
 
-values = Dict(
+vals = Dict(
     (eichel, ass) => 3,
     (eichel, könig) => 3,
     (eichel, ober) => 3,
@@ -141,3 +141,4 @@ values = Dict(
     (schellen, sieben) => 3,
     (schellen, sechs) => 3,
 )
+

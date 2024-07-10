@@ -18,17 +18,17 @@ end
 
 function Base.show(io::IO, trick::Trick)
     a = "finished trick $(trick.trick_idx) "
-    b = "$(trick.game_variant), starting player $(trick.starting_player.player_idx), winning player idx $(trick.winning_idx)): "
+    b = "$(trick.game_variant), starting player $(trick.starting_player.player_idx), winning player ${trick.winner.player_idx}/idx $(trick.winning_idx)): "
     c = join([string(card) for (player, card) in trick.played_cards], ", ")
     return print(io, string(a, b, c))
 end
 
 function print_trick_until_now(trick::Trick)
-    print(
+    println(
         "current trick $(trick.trick_idx) (game $(trick.game_variant), starting player $(trick.starting_player.player_idx))",
     )
     c = string(join([string(card) for (player, card) in trick.played_cards], ", "))
-    return print(string("played so far: ", c))
+    println(string("played so far: ", c))
 end
 
 function declare_winner(trick::Trick, winning_idx::Int, player::Player)
@@ -48,9 +48,9 @@ end
 function can_take_trick(trick::Trick, new_card::Card)
     best_card = trick.played_cards[1][2]
 
-    for (_, played_card) in trick.played_cards[2:end]
-        if new_card_trumps_another_card(trick, best_card, played_card)
-            best_card = played_card
+    for (_, card) in trick.played_cards[2:end]
+        if new_card_trumps_another_card(trick, best_card, card)
+            best_card = card
         end
     end
 
@@ -80,7 +80,9 @@ function is_first_card(trick::Trick)
 end
 
 function first_card_is_trump(trick::Trick)
-    return trick.game_variant == string(trick.played_cards[1][2].suit)
+    var= trick.game_variant 
+    fc =  string(trick.played_cards[1][2].suit)
+    return var == fc
 end
 
 function is_trump(trick::Trick, card::Card)

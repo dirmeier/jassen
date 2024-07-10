@@ -7,58 +7,36 @@
 
 ## About
 
-`Jassen` is a Julia implementation of the popular Swiss card game where we train a reinforcement learning agent as player.
+`Jassen` is a Julia implementation of the popular Swiss card game. It implements a simple command-line interface and offers greedy and RL trained agents as opponents.
 
 ## Usage
 
 To play a game of Jassen, call:
 
-```
+```bash
 cd jasssen
 julia --project=. main.jl
 ```
 
-This creates a game with 3 greedy bots and 1 human player:
+This creates a game with 4 greedy bots.
 
-```julia
-#!/usr/bin/julia
+To play yourself against the RL agent (or multiple RL agents), you can specify player types using:
 
-include("src/model/player/greedy_player.jl")
-include("src/model/player/human_player.jl")
-include("src/model/game.jl")
-
-(
-    function ()
-        players = [
-            HumanPlayer(1, 1), GreedyPlayer(2, 2), GreedyPlayer(3, 1), GreedyPlayer(4, 2)
-        ]
-        game = Game(players, 12345)
-
-        play_round(game)
-        return println("done")
-    end
-)()
+```bash
+julia --project=. main.jl --player1 human --player2 ai
 ```
 
-To play against the RL agent (or multiple RL agents), create a script and  the code to:
+## Installation
 
-```julia
-#!/usr/bin/julia
+Install [Julia](https://julialang.org/downloads/) and then download the repository via:
 
-include("src/model/player/greedy_player.jl")
-include("src/model/player/ai_player.jl")
-include("src/model/player/human_player.jl")
-include("src/model/game.jl")
-
-(
-    function ()
-        players = [
-            HumanPlayer(1, 1), AIPlayer(2, 2), GreedyPlayer(3, 1), GreedyPlayer(4, 2)
-        ]
-        game = Game(players, 12345)
-
-        play_round(game)
-        return println("done")
-    end
-)()
+```bash
+git clone https://github.com/dirmeier/jassen.git
 ```
+
+You can then call the above command and everything sets up automatically.
+
+
+## Author
+
+Simon Dirmeier <a href="mailto:sfyrbnd @ pm me">sfyrbnd @ pm me</a>

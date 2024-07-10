@@ -18,7 +18,7 @@ end
 
 function Base.show(io::IO, trick::Trick)
     a = "finished trick $(trick.trick_idx) "
-    b = "$(trick.game_variant), starting player $(trick.starting_player.player_idx), winning player ${trick.winner.player_idx}/idx $(trick.winning_idx)): "
+    b = "$(trick.game_variant), starting player $(trick.starting_player.player_idx), winning player $(trick.winner.player_idx)/idx $(trick.winning_idx)): "
     c = join([string(card) for (player, card) in trick.played_cards], ", ")
     return print(io, string(a, b, c))
 end

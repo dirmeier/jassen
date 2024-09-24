@@ -7,23 +7,22 @@
 
 ## About
 
-`Jassen` is a Julia implementation of the popular Swiss card game. It implements a simple command-line interface and offers greedy and RL trained agents as opponents.
+`Jassen` is a Julia implementation of the popular Swiss card game. 
+It implements a simple command-line interface and offers 'greedy agents' as opponents.
 
 ## Usage
 
-To play a game of Jassen, call
+To play a game of Jassen with 4 greedy players, call
 
 ```bash
 cd jasssen
 julia --project=. main.jl
 ```
 
-This creates a game with 4 greedy bots.
-
-To play yourself against the RL agent (or multiple RL agents), you can specify player types using
+You can, so far, specify two different player types using
 
 ```bash
-julia --project=. main.jl --player1 human --player2 ai
+julia --project=. main.jl --player1 human --player2 greedy
 ```
 
 ## Installation
